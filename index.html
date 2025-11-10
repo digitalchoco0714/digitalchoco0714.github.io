@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김민수 - 소프트웨어 개발자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-dark: #0a192f;
+            --navy: #112240;
+            --navy-light: #172a45;
+            --navy-lightest: #1d2d50;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --green: #64ffda;
+            --green-tint: rgba(100, 255, 218, 0.1);
+            --pink: #f57dff;
+            --blue: #57cbff;
+            --font-sans: 'Inter', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+            --fz-xxs: 12px;
+            --fz-xs: 13px;
+            --fz-sm: 14px;
+            --fz-md: 16px;
+            --fz-lg: 18px;
+            --fz-xl: 20px;
+            --fz-xxl: 22px;
+            --fz-heading: 32px;
+            --border-radius: 4px;
+            --nav-height: 100px;
+            --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
+            --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+            --shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.3;
+            color: var(--slate);
+            background-color: var(--navy-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            counter-reset: section;
+        }
+
+        ::selection {
+            background-color: var(--lightest-slate);
+            color: var(--navy-dark);
+        }
+
+        /* 헤더 스타일 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 11;
+            padding: 0px 50px;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo a {
+            color: var(--green);
+            font-family: var(--font-mono);
+            text-decoration: none;
+            font-size: var(--fz-lg);
+            font-weight: 400;
+            width: 42px;
+            height: 42px;
+            border: 2px solid var(--green);
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ol {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            counter-reset: item 0;
+        }
+
+        nav li {
+            margin: 0 5px;
+            position: relative;
+            font-size: var(--fz-xs);
+            counter-increment: item 1;
+        }
+
+        nav a {
+            padding: 10px;
+            text-decoration: none;
+            color: var(--lightest-slate);
+            font-family: var(--font-mono);
+            font-size: var(--fz-xs);
+            transition: var(--transition);
+        }
+
+        nav a:before {
+            content: '0' counter(item) '.';
+            margin-right: 5px;
+            color: var(--green);
+            font-size: var(--fz-xxs);
+            text-align: right;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: var(--green);
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            position: fixed;
+            width: 40px;
+            bottom: 0;
+            z-index: 10;
+            color: var(--light-slate);
+        }
+
+        .sidebar.left {
+            left: 40px;
+        }
+
+        .sidebar.right {
+            right: 40px;
+        }
+
+        .sidebar ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar ul::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 90px;
+            margin: 0 auto;
+            background-color: var(--light-slate);
+        }
+
+        .sidebar a {
+            margin: 20px auto;
+            padding: 10px;
+            font-family: var(--font-mono);
+            font-size: var(--fz-xxs);
+            line-height: var(--fz-lg);
+            letter-spacing: 0.1em;
+            color: var(--light-slate);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .sidebar a:hover,
+        .sidebar a:focus {
+            transform: translateY(-3px);
+            color: var(--green);
+        }
+
+        .sidebar.right a {
+            -webkit-writing-mode: vertical-rl;
+            writing-mode: vertical-rl;
+        }
+
+        /* 메인 콘텐츠 */
+        main {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 1600px;
+            min-height: 100vh;
+            padding: 0 150px;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            min-height: 100vh;
+            height: 100vh;
+            padding: 0;
+            position: relative;
+        }
+
+        .hero-profile {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 0 20px 4px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0s forwards;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .hero-profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        .hero-profile:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.6);
+        }
+
+        .hero-profile:hover img {
+            transform: rotate(360deg);
+        }
+
+        .hero h1 {
+            margin: 0 0 30px 4px;
+            color: var(--green);
+            font-family: var(--font-mono);
+            font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.1s forwards;
+        }
+
+        .hero h2 {
+            margin: 0;
+            font-size: clamp(40px, 8vw, 80px);
+            color: var(--lightest-slate);
+            font-weight: 600;
+            line-height: 0.9;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.2s forwards;
+        }
+
+        .hero h3 {
+            margin: 10px 0 0;
+            color: var(--slate);
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 600;
+            line-height: 0.9;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.3s forwards;
+        }
+
+        .hero p {
+            margin: 20px 0 0;
+            max-width: 540px;
+            color: var(--slate);
+            font-size: var(--fz-xl);
+            line-height: 1.3;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.4s forwards;
+        }
+
+        .email-link {
+            color: var(--green);
+            background-color: transparent;
+            border: 1px solid var(--green);
+            border-radius: var(--border-radius);
+            padding: 1.25rem 1.75rem;
+            font-size: var(--fz-sm);
+            font-family: var(--font-mono);
+            line-height: 1;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 50px;
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.5s forwards;
+        }
+
+        .email-link:hover,
+        .email-link:focus,
+        .email-link:active {
+            background-color: var(--green-tint);
+            outline: none;
+        }
+
+        /* 섹션 공통 스타일 */
+        .section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 0;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin: 10px 0 40px;
+            width: 100%;
+            font-size: clamp(26px, 5vw, var(--fz-heading));
+            font-weight: 600;
+            color: var(--lightest-slate);
+            line-height: 1.1;
+        }
+
+        .section-title::before {
+            position: relative;
+            bottom: 4px;
+            counter-increment: section 1;
+            content: '0' counter(section) '.';
+            margin-right: 10px;
+            color: var(--green);
+            font-family: var(--font-mono);
+            font-size: clamp(var(--fz-md), 3vw, var(--fz-xl));
+            font-weight: 400;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            position: relative;
+            top: -5px;
+            width: 300px;
+            height: 1px;
+            margin-left: 20px;
+            background-color: var(--lightest-slate);
+        }
+
+        /* About 섹션 */
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: var(--fz-lg);
+            line-height: 1.5;
+        }
+
+        .about-text p {
+            margin: 0 0 15px;
+            color: var(--slate);
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(140px, 200px));
+            gap: 0px 10px;
+            padding: 0;
+            margin: 20px 0 0 0;
+            overflow: hidden;
+            list-style: none;
+        }
+
+        .skills-list li {
+            position: relative;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            font-family: var(--font-mono);
+            font-size: var(--fz-xs);
+            color: var(--slate);
+        }
+
+        .skills-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-size: var(--fz-sm);
+            line-height: 12px;
+        }
+
+        .about-pic {
+            position: relative;
+            max-width: 300px;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 3px solid var(--green);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        .profile-wrapper:hover .profile-image {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(100, 255, 218, 0.4);
+        }
+
+        .profile-wrapper::before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            opacity: 0.1;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .profile-wrapper:hover::before {
+            opacity: 0.2;
+            transform: scale(1.1);
+        }
+
+        .profile-wrapper::after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            top: -10px;
+            left: -10px;
+            z-index: 0;
+            border: 1px solid var(--green);
+            background-color: transparent;
+            opacity: 0.3;
+            transition: var(--transition);
+        }
+
+        .profile-wrapper:hover::after {
+            transform: scale(1.05);
+            opacity: 0.6;
+        }
+
+        /* 프로필 이미지 주위에 발광 효과 */
+        .profile-wrapper:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Experience 섹션 */
+        .experience-tabs {
+            display: flex;
+            position: relative;
+            z-index: 3;
+            width: max-content;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .experience-tabs .tab {
+            border-left: 2px solid var(--lightest-slate);
+            background-color: transparent;
+            height: 42px;
+            padding: 0 20px 2px;
+            border: none;
+            border-radius: 0;
+            text-align: left;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: var(--fz-xs);
+            color: var(--slate);
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 42px;
+            background-color: transparent;
+            border-left: 2px solid var(--lightest-slate);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .experience-tabs .tab:hover,
+        .experience-tabs .tab:active,
+        .experience-tabs .tab:focus,
+        .experience-tabs .tab.active {
+            color: var(--green);
+            background-color: var(--green-tint);
+            border-left-color: var(--green);
+        }
+
+        .experience-content {
+            width: 100%;
+            height: auto;
+            padding-top: 10px;
+            padding-left: 30px;
+        }
+
+        .experience-content h3 {
+            margin-bottom: 2px;
+            font-size: var(--fz-xxl);
+            font-weight: 500;
+            line-height: 1.3;
+            color: var(--lightest-slate);
+        }
+
+        .experience-content .company {
+            color: var(--green);
+        }
+
+        .experience-content .range {
+            margin-bottom: 25px;
+            color: var(--light-slate);
+            font-family: var(--font-mono);
+            font-size: var(--fz-xs);
+        }
+
+        .experience-content ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            font-size: var(--fz-lg);
+        }
+
+        .experience-content li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+            color: var(--slate);
+        }
+
+        .experience-content li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-size: var(--fz-sm);
+            line-height: 18px;
+        }
+
+        /* Projects 섹션 */
+        .projects-grid {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .project-item {
+            position: relative;
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(12, 1fr);
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .project-item:nth-of-type(odd) .project-content {
+            grid-column: 1 / 7;
+            text-align: left;
+        }
+
+        .project-item:nth-of-type(odd) .project-image {
+            grid-column: 6 / -1;
+        }
+
+        .project-item:nth-of-type(even) .project-content {
+            grid-column: 7 / -1;
+            text-align: right;
+        }
+
+        .project-item:nth-of-type(even) .project-image {
+            grid-column: 1 / 8;
+        }
+
+        .project-content {
+            position: relative;
+            grid-column: 1 / 7;
+            grid-row: 1 / -1;
+        }
+
+        .project-overline {
+            margin: 10px 0;
+            color: var(--green);
+            font-family: var(--font-mono);
+            font-size: var(--fz-xs);
+            font-weight: 400;
+        }
+
+        .project-title {
+            color: var(--lightest-slate);
+            font-size: clamp(24px, 5vw, 28px);
+            margin: 0 0 20px;
+        }
+
+        .project-description {
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 2;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            background-color: var(--light-navy);
+            color: var(--light-slate);
+            font-size: var(--fz-lg);
+            line-height: 1.3;
+        }
+
+        .project-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+            margin: 25px 0 10px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .project-tech-list li {
+            margin: 0 20px 5px 0;
+            color: var(--light-slate);
+            font-family: var(--font-mono);
+            font-size: var(--fz-xs);
+            white-space: nowrap;
+        }
+
+        .project-image {
+            box-shadow: var(--shadow);
+            grid-column: 6 / -1;
+            grid-row: 1 / -1;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact 섹션 */
+        .contact {
+            max-width: 600px;
+            margin: 0 auto 100px;
+            text-align: center;
+        }
+
+        .contact .overline {
+            display: block;
+            margin-bottom: 20px;
+            color: var(--green);
+            font-family: var(--font-mono);
+            font-size: var(--fz-md);
+            font-weight: 400;
+        }
+
+        .contact .title {
+            font-size: clamp(40px, 5vw, 60px);
+            color: var(--lightest-slate);
+        }
+
+        .contact .email-link {
+            margin-top: 50px;
+        }
+
+        /* 푸터 */
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: auto;
+            min-height: 70px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        footer .social-links {
+            display: none;
+        }
+
+        footer .copyright {
+            color: var(--light-slate);
+            font-family: var(--font-mono);
+            font-size: var(--fz-xxs);
+            line-height: 1;
+        }
+
+        footer .copyright a {
+            color: var(--light-slate);
+            text-decoration: none;
+        }
+
+        footer .copyright a:hover,
+        footer .copyright a:focus {
+            color: var(--green);
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 1080px) {
+            main {
+                padding: 0 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 0 50px;
+            }
+
+            .hero h2,
+            .hero h3 {
+                font-size: clamp(30px, 8vw, 60px);
+            }
+
+            .hero-profile {
+                width: 60px;
+                height: 60px;
+                margin: 0 0 15px 4px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .about-pic {
+                order: -1;
+                text-align: center;
+            }
+
+            .profile-wrapper,
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+
+            .profile-wrapper::after {
+                width: 270px;
+                height: 270px;
+                top: -10px;
+                left: -10px;
+            }
+
+            .section-title::after {
+                width: 150px;
+            }
+
+            .project-item {
+                grid-template-columns: 1fr;
+            }
+
+            .project-content {
+                grid-column: 1 / -1 !important;
+                padding: 40px 40px 30px;
+                text-align: left !important;
+            }
+
+            .project-image {
+                grid-column: 1 / -1 !important;
+            }
+
+            .experience-tabs {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .experience-tabs .tab {
+                border-left: none;
+                border-top: 2px solid var(--lightest-slate);
+                width: 100%;
+                text-align: center;
+            }
+
+            .experience-tabs .tab.active {
+                border-left: none;
+                border-top-color: var(--green);
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 0 25px;
+            }
+
+            header {
+                padding: 0 25px;
+            }
+
+            .sidebar.left,
+            .sidebar.right {
+                display: none;
+            }
+
+            .hero-profile {
+                width: 50px;
+                height: 50px;
+            }
+
+            .profile-wrapper,
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .profile-wrapper::after {
+                width: 220px;
+                height: 220px;
+                top: -10px;
+                left: -10px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .section-title::after {
+                width: 100px;
+            }
+
+            nav ol {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: var(--fz-xxs);
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <div class="logo">
+            <a href="/" aria-label="home">김</a>
+        </div>
+        <nav>
+            <ol>
+                <li><a href="#about">소개</a></li>
+                <li><a href="#experience">경험</a></li>
+                <li><a href="#projects">프로젝트</a></li>
+                <li><a href="#contact">연락</a></li>
+            </ol>
+        </nav>
+    </header>
+
+    <!-- 사이드바 -->
+    <div class="sidebar left">
+        <ul>
+            <li><a href="https://github.com" aria-label="GitHub">GitHub</a></li>
+            <li><a href="https://linkedin.com" aria-label="LinkedIn">LinkedIn</a></li>
+            <li><a href="mailto:minsu@example.com" aria-label="Email">Email</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar right">
+        <a href="mailto:minsu@example.com">minsu@example.com</a>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <!-- 히어로 섹션 -->
+        <section class="hero" id="hero">
+            <div class="hero-profile">
+                <img src="profile.svg" alt="김민수" />
+            </div>
+            <h1>안녕하세요, 저는</h1>
+            <h2>김민수입니다.</h2>
+            <h3>사용자에게 가치 있는 서비스를 만듭니다.</h3>
+            <p>
+                저는 사용자 경험을 개선하는 기술적 솔루션을 찾는 것을 좋아하는 소프트웨어 개발자입니다. 
+                빠르게 변화하는 IT 업계에서 새로운 기술을 학습하고 적용하는 것에 큰 흥미를 느끼며, 
+                사용자가 더 편리하고 효율적으로 업무를 처리할 수 있도록 돕는 것이 저의 사명입니다.
+            </p>
+            <a href="mailto:minsu@example.com" class="email-link">연락하기</a>
+        </section>
+
+        <!-- 소개 섹션 -->
+        <section class="section fade-in" id="about">
+            <h2 class="section-title">소개</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        안녕하세요! 저는 대학에서 컴퓨터공학을 전공하며 프로그래밍의 기초를 다졌고, 
+                        졸업 후 2년간 스타트업에서 웹 개발 업무를 담당했습니다.
+                    </p>
+                    <p>
+                        빠르게 변화하는 IT 업계에서 새로운 기술을 학습하고 적용하는 것에 큰 흥미를 느끼며, 
+                        특히 사용자 경험을 개선하는 기술적 솔루션을 찾는 것을 좋아합니다.
+                    </p>
+                    <p>
+                        혁신적인 기술력과 우수한 개발 문화를 가진 환경에서 저의 기술적 역량을 더욱 
+                        발전시키고 의미 있는 프로젝트에 기여하고 싶습니다.
+                    </p>
+                    <p>제가 주로 사용하는 기술들입니다:</p>
+                    <ul class="skills-list">
+                        <li>JavaScript (ES6+)</li>
+                        <li>React</li>
+                        <li>Node.js</li>
+                        <li>Python</li>
+                        <li>HTML & CSS</li>
+                        <li>Git</li>
+                    </ul>
+                </div>
+                <div class="about-pic">
+                    <div class="profile-wrapper">
+                        <div class="profile-image">
+                            <img src="profile.svg" alt="김민수 프로필 사진" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 경험 섹션 -->
+        <section class="section fade-in" id="experience">
+            <h2 class="section-title">경험</h2>
+            <div class="experience-tabs">
+                <button class="tab active" data-tab="startup">스타트업</button>
+                <button class="tab" data-tab="hackathon">해커톤</button>
+                <button class="tab" data-tab="mentoring">멘토링</button>
+            </div>
+            <div class="experience-content">
+                <div class="tab-content active" id="startup">
+                    <h3>웹 개발자 <span class="company">@ 스타트업</span></h3>
+                    <p class="range">2022 — 2024</p>
+                    <ul>
+                        <li>빠르게 변화하는 환경에서의 웹 개발 업무 담당</li>
+                        <li>새로운 기술 학습과 적용에 대한 경험 축적</li>
+                        <li>사용자 경험을 개선하는 기술적 솔루션 개발</li>
+                        <li>팀 내에서 코드 리뷰와 기술 공유 활동 참여</li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="hackathon">
+                    <h3>팀장 <span class="company">@ 교내 해커톤</span></h3>
+                    <p class="range">2021</p>
+                    <ul>
+                        <li>"지역 상권 활성화 앱" 개발로 우수상 수상</li>
+                        <li>5명의 팀원과 함께 48시간 동안 React Native 앱 완성</li>
+                        <li>백엔드 API 설계부터 프론트엔드 구현까지 풀스택 개발 경험</li>
+                        <li>짧은 시간 내 팀원 역량 파악 및 효율적 업무 분배</li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="mentoring">
+                    <h3>멘토 <span class="company">@ 컴퓨터공학과 학회</span></h3>
+                    <p class="range">2018 — 2022</p>
+                    <ul>
+                        <li>4년간 후배들에게 프로그래밍 멘토링 진행</li>
+                        <li>복잡한 개념을 쉽게 설명하는 능력 개발</li>
+                        <li>멘토링 경험을 통한 코드 리뷰 및 기술 공유 역량 향상</li>
+                        <li>교육을 통한 지식 전달 및 소통 능력 개선</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 프로젝트 섹션 -->
+        <section class="section fade-in" id="projects">
+            <h2 class="section-title">주요 프로젝트</h2>
+            <ul class="projects-grid">
+                <li class="project-item">
+                    <div class="project-content">
+                        <div>
+                            <p class="project-overline">Featured Project</p>
+                            <h3 class="project-title">지역 상권 활성화 앱</h3>
+                            <div class="project-description">
+                                <p>
+                                    교내 해커톤에서 개발한 모바일 앱으로, 지역 상권의 정보를 제공하고 
+                                    소비자와 상인을 연결하는 플랫폼입니다. React Native를 사용하여 
+                                    크로스 플랫폼 앱으로 개발했습니다.
+                                </p>
+                            </div>
+                            <ul class="project-tech-list">
+                                <li>React Native</li>
+                                <li>Node.js</li>
+                                <li>Express</li>
+                                <li>MongoDB</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="project-image">
+                        <!-- 프로젝트 이미지 자리 -->
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 연락 섹션 -->
+        <section class="section fade-in" id="contact">
+            <div class="contact">
+                <span class="overline">다음은 무엇인가요?</span>
+                <h2 class="title">연락하기</h2>
+                <p>
+                    현재 새로운 기회를 찾고 있으며, 언제든 연락을 환영합니다. 
+                    질문이 있거나 단순히 인사를 하고 싶으시다면 최선을 다해 답변드리겠습니다!
+                </p>
+                <a href="mailto:minsu@example.com" class="email-link">안녕하세요!</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2025 김민수. 모든 권리 보유.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 스무스 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 경험 탭 기능
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+                
+                // 모든 탭과 콘텐츠에서 active 클래스 제거
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // 선택된 탭과 콘텐츠에 active 클래스 추가
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // 스크롤 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // 모든 fade-in 요소 관찰
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 헤더 스크롤 효과
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            const heroHeight = document.querySelector('.hero').offsetHeight;
+            
+            clearTimeout(scrollTimeout);
+            
+            if (window.scrollY > heroHeight - 100) {
+                header.style.height = '70px';
+                header.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
+            } else {
+                header.style.height = 'var(--nav-height)';
+                header.style.backgroundColor = 'rgba(10, 25, 47, 0.85)';
+            }
+        });
+
+        // 프로필 이미지 인터랙션
+        const profileWrapper = document.querySelector('.profile-wrapper');
+        if (profileWrapper) {
+            profileWrapper.addEventListener('click', function() {
+                // 프로필 이미지 클릭 시 펄스 효과
+                this.style.animation = 'pulse 0.6s ease-out';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 600);
+            });
+        }
+
+        // 히어로 프로필 이미지 인터랙션
+        const heroProfile = document.querySelector('.hero-profile');
+        if (heroProfile) {
+            heroProfile.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                if (img) {
+                    img.style.transform = 'rotate(720deg)';
+                    setTimeout(() => {
+                        img.style.transform = 'rotate(0deg)';
+                    }, 800);
+                }
+            });
+        }
+
+        // 펄스 애니메이션 CSS 추가
+        const pulseStyle = document.createElement('style');
+        pulseStyle.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(100, 255, 218, 0.6); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(pulseStyle);
+
+        // 페이지 로드 후 초기화
+        window.addEventListener('load', function() {
+            // 프로필 이미지 로드 확인
+            const profileImages = document.querySelectorAll('img[src="profile.svg"]');
+            profileImages.forEach(img => {
+                img.addEventListener('load', function() {
+                    console.log('Profile image loaded successfully');
+                });
+                
+                img.addEventListener('error', function() {
+                    console.warn('Profile image failed to load, using fallback');
+                    // 이미지 로드 실패 시 대체 처리
+                    this.style.backgroundColor = 'var(--green)';
+                    this.alt = '김민수 (이미지 로드 실패)';
+                });
+            });
+            
+            console.log('Portfolio loaded successfully');
+        });
+
+        // 키보드 접근성
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // CSS 추가 (탭 콘텐츠 표시/숨김)
+        const style = document.createElement('style');
+        style.textContent = `
+            .tab-content {
+                display: none;
+            }
+            .tab-content.active {
+                display: block;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
