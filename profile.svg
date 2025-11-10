@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 원형 배경 -->
+  <circle cx="50" cy="50" r="50" fill="white"/>
+  
+  <!-- 둥근 머리카락 -->
+  <path d="M50 5 C25 5, 10 20, 10 35 C10 30, 15 25, 20 22 C30 18, 40 15, 50 15 C60 15, 70 18, 80 22 C85 25, 90 30, 90 35 C90 20, 75 5, 50 5 Z" fill="#2d3748"/>
+  
+  <!-- 머리카락 좌측 연결 -->
+  <path d="M10 35 C10 40, 12 45, 15 50 C18 55, 22 60, 25 62 C28 64, 32 65, 35 65" stroke="#2d3748" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- 머리카락 우측 연결 -->
+  <path d="M90 35 C90 40, 88 45, 85 50 C82 55, 78 60, 75 62 C72 64, 68 65, 65 65" stroke="#2d3748" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- 얼굴 배경 -->
+  <circle cx="50" cy="55" r="30" fill="white"/>
+  
+  <!-- 왼쪽 눈 -->
+  <circle cx="43" cy="48" r="2.5" fill="black"/>
+  
+  <!-- 오른쪽 눈 -->
+  <circle cx="57" cy="48" r="2.5" fill="black"/>
+  
+  <!-- 미소 -->
+  <path d="M45 60 Q50 65, 55 60" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>
